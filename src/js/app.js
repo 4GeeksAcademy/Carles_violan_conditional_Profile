@@ -1,9 +1,10 @@
+import { name } from "file-loader";
 import "../style/index.css";
 
 /**
  *  EDIT ONLY INSIDE THIS RENDER FUNCTION
  *  This function is called every time the user changes types or changes any input
- * 
+  
     {
         includeCover: true, // if includeCover is true the algorithm should show the cover image
         background: "https://images.unsplash.com/photo-1511974035430-5de47d3b95da", // this is the image's url that will be used as a background for the profile cover
@@ -30,17 +31,33 @@ function render(variables = {}) {
   if (variables.includeCover == false) cover = "<div class='cover'></div>";
 
   // reset the website body with the new html output
+  if (variables.name == null) variables.name = "Introduce Data";
+  if (variables.lastName == null) variables.lastName = "...";
+  if (variables.role == null) variables.role = "...";
+  if (variables.city == null) variables.city = "...";
+  if (variables.country == null) variables.country = "...";
+
+  if (variables.linkedin == null)
+    variables.linkedin = "https://www.linkedin.com/";
+
+  if (variables.instagram == null)
+    variables.instagram = "https://www.instagram.com/";
+
+  if (variables.github == null) variables.github = "https://github.com/";
+
+  if (variables.twitter == null) variables.twitter = "https://x.com/?lang=ca";
+
   document.querySelector("#widget_content").innerHTML = `<div class="widget">
             ${cover}
           <img src="${variables.avatarURL}" class="photo" />
-          <h1>Lucy Boilett</h1>
-          <h2>Web Developer</h2>
-          <h3>Miami, USA</h3>
-          <ul class="position-right">
-            <li><a href="https://twitter.com/4geeksacademy"><i class="fab fa-twitter"></i></a></li>
-            <li><a href="https://github.com/4geeksacademy"><i class="fab fa-github"></i></a></li>
-            <li><a href="https://linkedin.com/school/4geeksacademy"><i class="fab fa-linkedin"></i></a></li>
-            <li><a href="https://instagram.com/4geeksacademy"><i class="fab fa-instagram"></i></a></li>
+          <h1>${variables.name}${variables.lastName}</h1>
+          <h2>${variables.city}${variables.country}</h2>         
+          <h3>${variables.role}</h3>
+          <ul class=${variables.socialMediaPosition}>
+            <li><a href="${variables.twitter}"target="_blank"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="${variables.github}" target="_blank"><i class="fab fa-github"></i></a></li>
+            <li><a href="${variables.linkedin}" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+            <li><a href="${variables.instagram}" target="_blank"><i class="fab fa-instagram"></i></a></li>
           </ul>
         </div>
     `;
@@ -70,6 +87,7 @@ window.onload = function() {
     country: null,
     city: null
   };
+
   render(window.variables); // render the card for the first time
 
   document.querySelectorAll(".picker").forEach(function(elm) {
